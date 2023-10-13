@@ -12,7 +12,6 @@ class AppConfigs(BaseSettings):
 
     @validator('ALLOWED_ORIGINS')
     def allowed_origin_convert_to_list(cls, value):
-        print(value)
         return value.split(',')
 
 
