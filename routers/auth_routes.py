@@ -5,6 +5,7 @@ from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
 from schemas import schemas
+from database import connection
 
 router = APIRouter(
     prefix="/auth",
