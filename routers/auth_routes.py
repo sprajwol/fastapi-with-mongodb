@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
@@ -18,7 +18,7 @@ async def signup(user: schemas.User):
 
 
 @router.post('/login', response_model=schemas.Token)
-async def login_for_access_token(
+async def login(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()]
 ):
     return form_data
