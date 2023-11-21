@@ -8,6 +8,7 @@ class User(BaseModel):
     last_name: str
     username: str
     email: EmailStr
+    password: str
 
 
 class Token(BaseModel):

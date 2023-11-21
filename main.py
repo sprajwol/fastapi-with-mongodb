@@ -21,8 +21,21 @@ app.include_router(auth_routes.router)
 
 @app.on_event("startup")
 async def startup_event():
-    print("STARTUP_EVENT")
-    print(f"DB_INFO ==> {connection.client.server_info()}")
+    print("--------------------------------STARTUP_EVENT--------------------------------")
+    try:
+        connection.client.server_info()
+        print("--------------------------------MongoDB Connection Successful--------------------------------")
+    except ServerSelectionTimeoutError as sste:
+        print("--------------------------------ServerSelectionTimeoutError--------------------------------")
+        print(sste)
+    except Exception as e:
+        print("--------------------------------Exception--------------------------------")
+        print(e)
+
+
+@app.on_event("shutdown")
+async def shutdown_event():
+    print("--------------------------------SHUTDOWN_EVENT--------------------------------")
 
 
 @app.get("/", tags=["Root"])

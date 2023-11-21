@@ -5,7 +5,7 @@ from pydantic_settings import BaseSettings
 class DatabaseConfigs(BaseSettings):
     MONGODB_CONNECTION_STRING: str
     DB_NAME: str
-    USERS_COLLECTION: str
+    USERS_COLLECTION_NAME: str
 
     class Config:
         extra = "ignore"
