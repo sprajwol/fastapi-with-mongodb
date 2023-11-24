@@ -51,7 +51,7 @@ async def signup(user: schemas.User):
             content=str(e),
             status_code=status.HTTP_400_BAD_REQUEST
         )
-    
+
     body = {"detail": "User has been created successfully."}
 
     return JSONResponse(
