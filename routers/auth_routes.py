@@ -23,12 +23,13 @@ async def signup(user: schemas.User):
         user['password'] = get_password_hash(user['password'])
 
         users_collection = connection.users_collection
-        users = users_collection.find({
+        filter = {
             "$or": [
                 {"username": user['username']},
                 {"email": user['email']}
             ]
-        }, {})
+        }
+        users = get_multiple(users_collection, filter)
         if list(users):
             raise ValueError(
                 "User with given username and/or email already exists.")
@@ -50,8 +51,13 @@ async def signup(user: schemas.User):
             content=str(e),
             status_code=status.HTTP_400_BAD_REQUEST
         )
+    
+    body = {"detail": "User has been created successfully."}
 
-    return "signup"
+    return JSONResponse(
+        status_code=status.HTTP_200_OK,
+        content=body
+    )
 
 
 @router.post('/login', response_model=schemas.Token)
@@ -92,3 +98,7 @@ def get_password_hash(password):
 
 def get_one(collection, filter: dict, projection: dict = {}):
     return collection.find_one(filter, projection)
+
+
+def get_multiple(collection, filter: dict, projection: dict = {}):
+    return collection.find(filter, projection)
